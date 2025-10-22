@@ -1,0 +1,18 @@
+OpenIntegrity Nickel Core - Session Demo
+=========================================
+
+This is an example agent session that demonstrates the encryption feature.
+
+Session Context:
+- Working on: Feature implementation for encrypted repository content
+- Agent: Claude Code
+- Date: 2025-01-21
+- Status: Planning phase
+
+Conversation Summary:
+---------------------
+
+User: I would like to add a feature that doesn't exist in the original reference
+implementation. I'd like each repo to be able to keep encrypt repository content,
+such as agent session data, so that conversations can be picked up but also kept
+private while being stored in public repositories.

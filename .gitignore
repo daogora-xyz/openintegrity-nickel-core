@@ -38,3 +38,12 @@ __pycache__/
 *.pyd
 .Python
 *.egg-info/
+
+# Encryption keys (NEVER commit!)
+.sessions/keys/
+*.key
+*.pem
+
+# Decrypted session files (keep encrypted only)
+.sessions/**/*.decrypted
+*.decrypted

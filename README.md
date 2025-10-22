@@ -28,6 +28,12 @@ nix-shell -p nickel
 # Validate example work stream
 nickel export <<< 'import "examples/simple-work-stream.ncl"'
 
+# Initialize encrypted session storage (NEW!)
+./scripts/encryption/session-encrypt.sh init
+
+# Encrypt agent session data for private storage in public repos
+./scripts/encryption/session-encrypt.sh encrypt my-session.txt
+
 # Generate markdown documentation
 ./generators/generate-markdown.sh
 ```
@@ -47,13 +53,39 @@ openintegrity-nickel-core/
 │   └── COMPARISON.md     # vs original implementation
 ├── scripts/
 │   ├── sync-upstream.sh  # Fetch latest OpenIntegrityProject
+│   ├── encryption/       # Session encryption tools
 │   └── .git-hooks/       # Git hooks for validation
+├── .sessions/            # Encrypted agent sessions
+│   ├── encrypted/        # Encrypted files (can be public)
+│   └── keys/             # Encryption keys (gitignored)
 └── upstream-snapshot/    # Latest OpenIntegrityProject state (repomix)
 ```
 
 ## Key Features
 
-### 1. Work Stream Contracts
+### 1. Encrypted Session Storage ✨ NEW
+
+Store agent conversations and sensitive work stream data securely in public repositories using modern encryption. See [docs/ENCRYPTION.md](docs/ENCRYPTION.md) for details.
+
+```bash
+# Initialize encryption
+./scripts/encryption/session-encrypt.sh init
+
+# Encrypt a session
+./scripts/encryption/session-encrypt.sh encrypt my-conversation.txt
+
+# Commit encrypted version safely to public repo
+git add .sessions/encrypted/
+git commit -m "Add encrypted agent session"
+```
+
+**Features:**
+- Private agent conversations in public repositories
+- BIP-32 hierarchical key derivation for organized key management
+- Nickel contracts for encrypted session metadata
+- Session references in work stream tracking
+
+### 2. Work Stream Contracts
 
 ```nickel
 {
@@ -72,7 +104,7 @@ openintegrity-nickel-core/
 }
 ```
 
-### 2. Cryptographic Verification
+### 3. Cryptographic Verification
 
 ```nickel
 {
@@ -89,7 +121,7 @@ openintegrity-nickel-core/
 }
 ```
 
-### 3. TDD Workflow Tracking
+### 4. TDD Workflow Tracking
 
 ```nickel
 {
